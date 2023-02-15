@@ -6,8 +6,8 @@ import io.reactivex.Single;
 import ru.artkorchagin.rxtraining.exceptions.NotImplementedException;
 
 /**
- * @author Arthur Korchagin (artur.korchagin@simbirsoft.com)
- * @since 20.11.18
+ * @author Vladislav Mitryashkin
+ * @since 15.02.23
  */
 public class RxMaybeTraining {
 
@@ -21,7 +21,8 @@ public class RxMaybeTraining {
      * либо не эммитит ничего, если {@code value} отрицательное
      */
     Maybe<Integer> positiveOrEmpty(Integer value) {
-        throw new NotImplementedException();
+        if (value > 0) return Maybe.just(value);
+        else return Maybe.empty();
     }
 
     /**
@@ -32,7 +33,9 @@ public class RxMaybeTraining {
      * положительное число, иначе не эммитит ничего
      */
     Maybe<Integer> positiveOrEmpty(Single<Integer> valueSingle) {
-        throw new NotImplementedException();
+        if (valueSingle.blockingGet() > 0)
+            return Maybe.just(valueSingle.blockingGet());
+        else return Maybe.empty();
     }
 
     /**
@@ -43,7 +46,8 @@ public class RxMaybeTraining {
      * последовательность пустая
      */
     Maybe<Integer> calculateSumOfValues(Observable<Integer> integerObservable) {
-        throw new NotImplementedException();
+        if (integerObservable.isEmpty().blockingGet()) return Maybe.empty();
+        else return Maybe.just(integerObservable.reduce(0, (x, y) -> x + y).blockingGet());
     }
 
     /**
@@ -54,7 +58,7 @@ public class RxMaybeTraining {
      * {@code defaultValue} если последовательность пустая
      */
     Single<Integer> leastOneElement(Maybe<Integer> integerMaybe, int defaultValue) {
-        throw new NotImplementedException();
+        return Single.just(integerMaybe.defaultIfEmpty(defaultValue).blockingGet());
     }
 
 }
