@@ -4,8 +4,8 @@ import io.reactivex.Observable;
 import ru.artkorchagin.rxtraining.exceptions.NotImplementedException;
 
 /**
- * @author Arthur Korchagin (artur.korchagin@simbirsoft.com)
- * @since 20.11.18
+ * @author Vladislav Mitryashkin
+ * @since 15.02.23
  */
 public class RxErrorsTraining {
 
@@ -22,7 +22,7 @@ public class RxErrorsTraining {
      * defaultValue
      */
     Observable<Integer> handleErrorsWithDefaultValue(Observable<Integer> intObservable, final Integer defaultValue) {
-        throw new NotImplementedException();
+        return intObservable.onErrorReturnItem(defaultValue);
     }
 
     /**
@@ -36,6 +36,6 @@ public class RxErrorsTraining {
      * {@code fallbackObservable}
      */
     Observable<Integer> handleErrorsWithFallbackObservable(Observable<Integer> intObservable, Observable<Integer> fallbackObservable) {
-        throw new NotImplementedException();
+        return intObservable.onErrorResumeNext(fallbackObservable);
     }
 }
